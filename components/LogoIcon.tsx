@@ -1,75 +1,65 @@
 /**
  * LogoIcon.tsx — App logo for PassCheck
- * Original flowing checkmark design for password validation
+ * Modern checkmark that protrudes from circular container
  */
 
 export default function LogoIcon() {
   return (
     <svg
-      viewBox="0 0 128 128"
+      viewBox="0 0 120 120"
       width="56"
       height="56"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        {/* Gradient from cyan to green (matching PassCheck theme) */}
+        {/* Gradient from cyan to green */}
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#00F5FF" />
           <stop offset="100%" stopColor="#00FF88" />
         </linearGradient>
 
-        {/* Glow effect for depth */}
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
-          <feMerge>
-            <feMergeNode in="coloredBlur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
+        {/* Subtle shadow for depth */}
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="2" floodOpacity="0.3" />
         </filter>
       </defs>
 
-      {/* Outer circle with gradient border - modern style */}
+      {/* Circular container - subtle background */}
       <circle
-        cx="64"
-        cy="64"
-        r="58"
+        cx="50"
+        cy="50"
+        r="48"
+        fill="none"
         stroke="url(#logoGradient)"
-        strokeWidth="2"
-        opacity="0.25"
+        strokeWidth="1.5"
+        opacity="0.2"
       />
 
-      {/* Original flowing checkmark with curved, organic stroke */}
-      <g filter="url(#glow)">
-        {/* Curved left portion - swinging upward with momentum */}
-        <path
-          d="M 38 72 Q 48 84 54 78"
+      {/* Clean, modern checkmark that protrudes beyond the circle */}
+      <g filter="url(#shadow)">
+        {/* Left diagonal stroke of checkmark */}
+        <line
+          x1="32"
+          y1="52"
+          x2="46"
+          y2="66"
           stroke="url(#logoGradient)"
-          strokeWidth="12"
+          strokeWidth="11"
           strokeLinecap="round"
           strokeLinejoin="round"
-          fill="none"
         />
 
-        {/* Curved right portion - sweeping stroke with varied width via transform-origin */}
-        <path
-          d="M 54 78 Q 72 56 96 38"
+        {/* Right diagonal stroke - extends upward and beyond circle boundary */}
+        <line
+          x1="46"
+          y1="66"
+          x2="78"
+          y2="30"
           stroke="url(#logoGradient)"
-          strokeWidth="12"
+          strokeWidth="11"
           strokeLinecap="round"
           strokeLinejoin="round"
-          fill="none"
-          vectorEffect="non-scaling-stroke"
-        />
-
-        {/* Subtle accent spark - small flowing line near endpoint for originality */}
-        <path
-          d="M 88 46 Q 98 38 104 32"
-          stroke="url(#logoGradient)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          opacity="0.6"
-          fill="none"
         />
       </g>
     </svg>
