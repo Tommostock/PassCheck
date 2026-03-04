@@ -98,12 +98,24 @@ function generateFeedback(analysis: PasswordAnalysis): FeedbackItem[] {
     });
   }
 
-  if (length < 8) {
+  if (patterns.hasOnlyLowercase) {
     items.push({
       type: 'warning',
-      headline: 'Too short',
-      body: `At ${length} characters, a modern GPU can brute-force this in seconds. ` +
-            'Aim for at least 12 characters.',
+      headline: 'Lowercase only — character set too small',
+      body: 'Using only lowercase letters limits you to 26 possible characters per position. ' +
+            'Adding even one uppercase letter, digit, or symbol expands the search space by 2–4×. ' +
+            '2026 password standards (NIST, NCSC) class lowercase-only passwords as weak regardless of length. ' +
+            'Try a passphrase with mixed case: "Coral-Fence-Album-Seven".',
+    });
+  }
+
+  if (length < 12) {
+    items.push({
+      type: 'warning',
+      headline: length < 8 ? 'Far too short' : 'Below recommended length',
+      body: `At ${length} characters, this falls below the 2026 minimum of 12 characters. ` +
+            'Current global standards (NIST SP 800-63B, NCSC) recommend at least 12–15 characters. ' +
+            'Length is the single most important factor — each extra character multiplies the search space.',
     });
   }
 
@@ -144,20 +156,21 @@ function generateFeedback(analysis: PasswordAnalysis): FeedbackItem[] {
   }
 
   // ── Always-shown tips ────────────────────────────────
-  if (!has.symbol || !has.upper || !has.digit || length < 12) {
+  if (!has.symbol || !has.upper || !has.digit || length < 15) {
     items.push({
       type: 'tip',
-      headline: 'The strongest passwords use all 4 character types + length',
-      body: 'Lowercase + uppercase + numbers + symbols across 12+ characters gives you ' +
-            'over 94^12 ≈ 500 trillion trillion combinations.',
+      headline: '2026 standard: 15+ characters beats forced complexity',
+      body: 'Global standards no longer mandate symbols or regular changes — they prioritise length. ' +
+            'A 15+ character password with mixed case is stronger than a short complex one. ' +
+            'Lowercase + uppercase + numbers + symbols across 15+ characters is ideal.',
     });
   }
 
   items.push({
     type: 'tip',
-    headline: 'Consider a passphrase instead',
-    body: 'Four random words like "coral-fence-album-seven" are easy to remember, hard to crack, ' +
-          'and can be even stronger than a complex short password.',
+    headline: 'Try the "three random words" approach',
+    body: 'A passphrase like "Coral-Fence-Album-Seven" is easy to remember, over 20 characters, ' +
+          'and far harder to crack than "P@ssw0rd!". Use a password manager for everything else.',
   });
 
   return items;

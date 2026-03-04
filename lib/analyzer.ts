@@ -51,6 +51,7 @@ export interface PasswordAnalysis {
     hasLeetSpeak: boolean;       // p@ssw0rd — looks fancy but attackers try these
     hasCommonSuffix: boolean;    // ends in 123, !, 2024 etc.
     isDictionaryWord: boolean;   // sports team, name, city, common word
+    hasOnlyLowercase: boolean;   // no uppercase, digits or symbols — reduces search space dramatically
   };
 
   /** Penalty-adjusted score from 0 to 100 */
@@ -214,6 +215,7 @@ export function analyzePassword(password: string): PasswordAnalysis {
     hasLeetSpeak:     detectLeetSpeak(password),
     hasCommonSuffix:  detectCommonSuffix(password),
     isDictionaryWord: detectDictionaryWord(password),
+    hasOnlyLowercase: has.lower && !has.upper && !has.digit && !has.symbol,
   };
 
   // ── 5. SCORING ────────────────────────────────────────
@@ -224,6 +226,7 @@ export function analyzePassword(password: string): PasswordAnalysis {
   // Apply penalties for detected weaknesses
   if (patterns.isCommonPassword) score  = Math.min(score, 5);   // almost zero
   if (patterns.isDictionaryWord) score  = Math.min(score, 20);  // clamp to Weak — dictionary words are cracked in milliseconds
+  if (patterns.hasOnlyLowercase) score  = Math.min(score, 35);  // clamp to Weak — lowercase-only halves the effective search space
   if (patterns.hasKeyboardWalk)  score -= 20;
   if (patterns.hasRepeats)       score -= 15;
   if (patterns.hasSequential)    score -= 10;
