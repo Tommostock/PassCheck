@@ -1,6 +1,6 @@
 /**
- * LogoIcon.tsx — Bold checkmark flanked by double asterisks
- * * * ✓ * * design
+ * LogoIcon.tsx — Scaled asterisks converging on a bold tick
+ * Sizes scale up outer → inner → tick for visual depth
  */
 
 export default function LogoIcon() {
@@ -19,15 +19,15 @@ export default function LogoIcon() {
         </linearGradient>
       </defs>
 
-      {/* Outer-left asterisk */}
-      <text x="20"  y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
-        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.5">*</text>
+      {/* Outer-left asterisk — smallest, most faded */}
+      <text x="18"  y="70" fontSize="36" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.4">*</text>
 
-      {/* Inner-left asterisk */}
-      <text x="60"  y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
-        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.75">*</text>
+      {/* Inner-left asterisk — medium, slightly brighter */}
+      <text x="58"  y="74" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.7">*</text>
 
-      {/* Bold checkmark — centred */}
+      {/* Bold checkmark — largest, full opacity, focal point */}
       <line x1="98"  y1="54" x2="116" y2="74"
         stroke="url(#logoGradient)" strokeWidth="18"
         strokeLinecap="round" strokeLinejoin="round" />
@@ -35,13 +35,13 @@ export default function LogoIcon() {
         stroke="url(#logoGradient)" strokeWidth="18"
         strokeLinecap="round" strokeLinejoin="round" />
 
-      {/* Inner-right asterisk */}
-      <text x="180" y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
-        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.75">*</text>
+      {/* Inner-right asterisk — medium, slightly brighter */}
+      <text x="182" y="74" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.7">*</text>
 
-      {/* Outer-right asterisk */}
-      <text x="220" y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
-        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.5">*</text>
+      {/* Outer-right asterisk — smallest, most faded */}
+      <text x="222" y="70" fontSize="36" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.4">*</text>
     </svg>
   );
 }
