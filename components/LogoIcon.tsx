@@ -1,13 +1,13 @@
 /**
- * LogoIcon.tsx — Bold phone app icon checkmark with flanking asterisks
- * * ✓ * design
+ * LogoIcon.tsx — Bold checkmark flanked by double asterisks
+ * * * ✓ * * design
  */
 
 export default function LogoIcon() {
   return (
     <svg
-      viewBox="0 0 160 100"
-      width="80"
+      viewBox="0 0 240 100"
+      width="120"
       height="50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -19,55 +19,29 @@ export default function LogoIcon() {
         </linearGradient>
       </defs>
 
-      {/* Left asterisk */}
-      <text
-        x="16"
-        y="68"
-        fontSize="38"
-        fontWeight="700"
-        fill="url(#logoGradient)"
-        textAnchor="middle"
-        fontFamily="ui-monospace, monospace"
-        opacity="0.85"
-      >
-        *
-      </text>
+      {/* Outer-left asterisk */}
+      <text x="20"  y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.5">*</text>
 
-      {/* Bold checkmark — centred between asterisks */}
-      <line
-        x1="58"
-        y1="55"
-        x2="75"
-        y2="72"
-        stroke="url(#logoGradient)"
-        strokeWidth="16"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <line
-        x1="75"
-        y1="72"
-        x2="113"
-        y2="18"
-        stroke="url(#logoGradient)"
-        strokeWidth="16"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      {/* Inner-left asterisk */}
+      <text x="60"  y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.75">*</text>
 
-      {/* Right asterisk */}
-      <text
-        x="144"
-        y="68"
-        fontSize="38"
-        fontWeight="700"
-        fill="url(#logoGradient)"
-        textAnchor="middle"
-        fontFamily="ui-monospace, monospace"
-        opacity="0.85"
-      >
-        *
-      </text>
+      {/* Bold checkmark — centred */}
+      <line x1="98"  y1="54" x2="116" y2="74"
+        stroke="url(#logoGradient)" strokeWidth="18"
+        strokeLinecap="round" strokeLinejoin="round" />
+      <line x1="116" y1="74" x2="152" y2="20"
+        stroke="url(#logoGradient)" strokeWidth="18"
+        strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* Inner-right asterisk */}
+      <text x="180" y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.75">*</text>
+
+      {/* Outer-right asterisk */}
+      <text x="220" y="72" fontSize="52" fontWeight="700" fill="url(#logoGradient)"
+        textAnchor="middle" fontFamily="ui-monospace, monospace" opacity="0.5">*</text>
     </svg>
   );
 }
