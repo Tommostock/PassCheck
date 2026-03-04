@@ -33,9 +33,9 @@ export default function PasswordInput({ value, onChange }: Props) {
         <span
           className="ml-auto text-[10px] px-2 py-0.5 rounded-full"
           style={{
-            background: 'rgba(0, 245, 255, 0.08)',
-            color: '#00F5FF',
-            border: '1px solid rgba(0,245,255,0.2)',
+            background: 'rgba(180, 0, 20, 0.15)',
+            color: '#ff1a1a',
+            border: '1px solid rgba(180, 0, 20, 0.5)',
           }}
         >
           not your real one!
