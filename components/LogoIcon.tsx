@@ -1,12 +1,12 @@
 /**
- * LogoIcon.tsx — App logo for PassCheck
- * Modern checkmark that protrudes from circular container
+ * LogoIcon.tsx — Sleek, futuristic checkmark logo
+ * Solitary minimalist tick with no container
  */
 
 export default function LogoIcon() {
   return (
     <svg
-      viewBox="0 0 120 120"
+      viewBox="0 0 100 100"
       width="56"
       height="56"
       fill="none"
@@ -18,50 +18,28 @@ export default function LogoIcon() {
           <stop offset="0%" stopColor="#00F5FF" />
           <stop offset="100%" stopColor="#00FF88" />
         </linearGradient>
-
-        {/* Subtle shadow for depth */}
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="2" stdDeviation="2" floodOpacity="0.3" />
-        </filter>
       </defs>
 
-      {/* Circular container - subtle background */}
-      <circle
-        cx="50"
-        cy="50"
-        r="48"
-        fill="none"
+      {/* Sleek, futuristic checkmark - curved strokes for modern feel */}
+      {/* Left curve of checkmark */}
+      <path
+        d="M 28 54 Q 38 62 45 55"
         stroke="url(#logoGradient)"
-        strokeWidth="1.5"
-        opacity="0.2"
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
       />
 
-      {/* Clean, modern checkmark that protrudes beyond the circle */}
-      <g filter="url(#shadow)">
-        {/* Left diagonal stroke of checkmark */}
-        <line
-          x1="32"
-          y1="52"
-          x2="46"
-          y2="66"
-          stroke="url(#logoGradient)"
-          strokeWidth="11"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-
-        {/* Right diagonal stroke - extends upward and beyond circle boundary */}
-        <line
-          x1="46"
-          y1="66"
-          x2="78"
-          y2="30"
-          stroke="url(#logoGradient)"
-          strokeWidth="11"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
+      {/* Right curve of checkmark - elegant sweep upward */}
+      <path
+        d="M 45 55 Q 65 35 78 20"
+        stroke="url(#logoGradient)"
+        strokeWidth="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
     </svg>
   );
 }

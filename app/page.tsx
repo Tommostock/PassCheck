@@ -68,14 +68,7 @@ export default function Home() {
         transition={{ duration: 0.5 }}
       >
         {/* App icon / logo */}
-        <div
-          className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
-          style={{
-            background: 'linear-gradient(135deg, rgba(0,245,255,0.15), rgba(0,255,136,0.1))',
-            border: '1px solid rgba(0,245,255,0.3)',
-            boxShadow: '0 0 30px rgba(0,245,255,0.1)',
-          }}
-        >
+        <div className="inline-flex items-center justify-center mb-3">
           <LogoIcon />
         </div>
 
