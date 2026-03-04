@@ -20,6 +20,7 @@ import StrengthMeter    from '@/components/StrengthMeter';
 import AnalysisBadges   from '@/components/AnalysisBadges';
 import AttackSimulator  from '@/components/AttackSimulator';
 import FeedbackPanel    from '@/components/FeedbackPanel';
+import LogoIcon         from '@/components/LogoIcon';
 
 // Our logic library
 import { analyzePassword, emptyAnalysis, PasswordAnalysis } from '@/lib/analyzer';
@@ -68,14 +69,14 @@ export default function Home() {
       >
         {/* App icon / logo */}
         <div
-          className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3 text-2xl"
+          className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-3"
           style={{
             background: 'linear-gradient(135deg, rgba(0,245,255,0.15), rgba(0,255,136,0.1))',
             border: '1px solid rgba(0,245,255,0.3)',
             boxShadow: '0 0 30px rgba(0,245,255,0.1)',
           }}
         >
-          🗝️
+          <LogoIcon />
         </div>
 
         <h1
