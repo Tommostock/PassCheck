@@ -31,7 +31,7 @@ export default function PasswordInput({ value, onChange }: Props) {
         <span className="text-base">🔐</span>
         Enter a test password
         <span
-          className="ml-auto text-[10px] px-2 py-0.5 rounded-full"
+          className="ml-auto text-[9px] px-1.5 py-0.5 rounded-full whitespace-nowrap"
           style={{
             background: 'rgba(180, 0, 20, 0.15)',
             color: '#ff1a1a',
