@@ -75,7 +75,7 @@ export default function Home() {
         <h1
           className="text-2xl font-bold tracking-tight"
           style={{
-            background: 'linear-gradient(135deg, #00F5FF, #00FF88)',
+            background: 'linear-gradient(135deg, #11b67a, #006a4d)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
