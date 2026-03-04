@@ -1,6 +1,6 @@
 /**
  * LogoIcon.tsx — App logo for PassCheck
- * Bold, iconic checkmark design for password validation
+ * Original flowing checkmark design for password validation
  */
 
 export default function LogoIcon() {
@@ -19,9 +19,9 @@ export default function LogoIcon() {
           <stop offset="100%" stopColor="#00FF88" />
         </linearGradient>
 
-        {/* Glow effect */}
+        {/* Glow effect for depth */}
         <filter id="glow">
-          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+          <feGaussianBlur stdDeviation="2" result="coloredBlur" />
           <feMerge>
             <feMergeNode in="coloredBlur" />
             <feMergeNode in="SourceGraphic" />
@@ -29,35 +29,46 @@ export default function LogoIcon() {
         </filter>
       </defs>
 
-      {/* Outer circle border - subtle */}
+      {/* Outer circle with gradient border - modern style */}
       <circle
         cx="64"
         cy="64"
         r="58"
         stroke="url(#logoGradient)"
         strokeWidth="2"
-        opacity="0.3"
+        opacity="0.25"
       />
 
-      {/* Bold checkmark - the main focal point */}
+      {/* Original flowing checkmark with curved, organic stroke */}
       <g filter="url(#glow)">
-        {/* Left part of checkmark (short stroke from lower-left going right-up) */}
-        <polyline
-          points="44,68 56,80"
+        {/* Curved left portion - swinging upward with momentum */}
+        <path
+          d="M 38 72 Q 48 84 54 78"
           stroke="url(#logoGradient)"
-          strokeWidth="14"
+          strokeWidth="12"
           strokeLinecap="round"
           strokeLinejoin="round"
           fill="none"
         />
 
-        {/* Right part of checkmark (long stroke from middle going upper-right) */}
-        <polyline
-          points="56,80 90,42"
+        {/* Curved right portion - sweeping stroke with varied width via transform-origin */}
+        <path
+          d="M 54 78 Q 72 56 96 38"
           stroke="url(#logoGradient)"
-          strokeWidth="14"
+          strokeWidth="12"
           strokeLinecap="round"
           strokeLinejoin="round"
+          fill="none"
+          vectorEffect="non-scaling-stroke"
+        />
+
+        {/* Subtle accent spark - small flowing line near endpoint for originality */}
+        <path
+          d="M 88 46 Q 98 38 104 32"
+          stroke="url(#logoGradient)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          opacity="0.6"
           fill="none"
         />
       </g>
