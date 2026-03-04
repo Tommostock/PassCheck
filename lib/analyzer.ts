@@ -9,7 +9,7 @@
  * Everything here runs in your browser. Nothing is sent anywhere.
  */
 
-import { COMMON_PASSWORDS, KEYBOARD_WALKS } from './wordlists';
+import { COMMON_PASSWORDS, KEYBOARD_WALKS, COMMON_DICTIONARY_WORDS } from './wordlists';
 
 // ─────────────────────────────────────────────────────────
 // TYPE DEFINITIONS
@@ -50,6 +50,7 @@ export interface PasswordAnalysis {
     hasSequential: boolean;      // abc, xyz, 123, 987
     hasLeetSpeak: boolean;       // p@ssw0rd — looks fancy but attackers try these
     hasCommonSuffix: boolean;    // ends in 123, !, 2024 etc.
+    isDictionaryWord: boolean;   // sports team, name, city, common word
   };
 
   /** Penalty-adjusted score from 0 to 100 */
@@ -134,6 +135,31 @@ function detectCommonSuffix(password: string): boolean {
   return suffixes.some(s => lower.endsWith(s));
 }
 
+/**
+ * Detect if a password is a dictionary word or a trivial variation.
+ *
+ * Real cracking dictionaries contain sports teams, place names, first names
+ * and common words — all appearing hundreds of thousands of times in breach
+ * databases. These are cracked in milliseconds regardless of length, because
+ * the attacker skips brute force entirely and goes straight to the word list.
+ *
+ * We also catch word + short suffix patterns (arsenal123, chelsea!)
+ * since those are the first mutations every hybrid attack tries.
+ */
+function detectDictionaryWord(password: string): boolean {
+  const lower = password.toLowerCase();
+  // Exact match
+  if (COMMON_DICTIONARY_WORDS.includes(lower)) return true;
+  // Word + short numeric/symbol suffix, e.g. arsenal123, chelsea!
+  for (const word of COMMON_DICTIONARY_WORDS) {
+    if (lower.startsWith(word) && lower.length > word.length) {
+      const suffix = lower.slice(word.length);
+      if (suffix.length <= 6 && /^[0-9!@#$%^&*\-_]+$/.test(suffix)) return true;
+    }
+  }
+  return false;
+}
+
 // ─────────────────────────────────────────────────────────
 // MAIN ANALYSIS FUNCTION
 // ─────────────────────────────────────────────────────────
@@ -187,6 +213,7 @@ export function analyzePassword(password: string): PasswordAnalysis {
     hasSequential:    detectSequential(password),
     hasLeetSpeak:     detectLeetSpeak(password),
     hasCommonSuffix:  detectCommonSuffix(password),
+    isDictionaryWord: detectDictionaryWord(password),
   };
 
   // ── 5. SCORING ────────────────────────────────────────
@@ -196,6 +223,7 @@ export function analyzePassword(password: string): PasswordAnalysis {
 
   // Apply penalties for detected weaknesses
   if (patterns.isCommonPassword) score  = Math.min(score, 5);   // almost zero
+  if (patterns.isDictionaryWord) score  = Math.min(score, 20);  // clamp to Weak — dictionary words are cracked in milliseconds
   if (patterns.hasKeyboardWalk)  score -= 20;
   if (patterns.hasRepeats)       score -= 15;
   if (patterns.hasSequential)    score -= 10;

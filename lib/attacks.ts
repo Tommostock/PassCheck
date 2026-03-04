@@ -12,7 +12,7 @@
 
 import { PasswordAnalysis } from './analyzer';
 import { COMMON_PASSWORDS, DICTIONARY_WORDS, COMMON_SUFFIXES,
-         DISPLAY_WORDS_DICT, DISPLAY_WORDS_HYBRID } from './wordlists';
+         DISPLAY_WORDS_DICT, DISPLAY_WORDS_HYBRID, COMMON_DICTIONARY_WORDS } from './wordlists';
 
 // ─────────────────────────────────────────────────────────
 // TYPE DEFINITIONS
@@ -69,7 +69,9 @@ export async function runDictionaryAttack(
   const DELAY_MS = 80;    // Milliseconds between each frame
 
   // Determine outcome before animation starts
-  const willCrack = analysis.patterns.isCommonPassword || analysis.patterns.hasKeyboardWalk;
+  const willCrack = analysis.patterns.isCommonPassword
+    || analysis.patterns.hasKeyboardWalk
+    || analysis.patterns.isDictionaryWord;
   const crackedAtStep = willCrack ? Math.floor(TOTAL_STEPS * 0.6 + Math.random() * TOTAL_STEPS * 0.3) : TOTAL_STEPS;
 
   let attemptsCount = 0;
@@ -138,11 +140,15 @@ export async function runHybridAttack(
   const TOTAL_STEPS = 28;
   const DELAY_MS = 90;
 
-  // Crack if: common suffix on a dictionary-ish word, OR leet speak
+  // Crack if: dictionary word (with or without suffix), leet speak, or common suffix on any word
   const lowerPwd = analysis.password.toLowerCase();
-  const baseWordMatch = DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w));
+  const baseWordMatch = COMMON_DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w))
+    || DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w));
   const suffixMatch   = COMMON_SUFFIXES.find(s => lowerPwd.endsWith(s));
-  const willCrack     = (!!baseWordMatch && !!suffixMatch) || analysis.patterns.hasLeetSpeak || analysis.patterns.hasCommonSuffix;
+  const willCrack     = (!!baseWordMatch && !!suffixMatch)
+    || analysis.patterns.hasLeetSpeak
+    || analysis.patterns.hasCommonSuffix
+    || analysis.patterns.isDictionaryWord;
   const crackedAtStep = willCrack ? Math.floor(TOTAL_STEPS * 0.5 + Math.random() * TOTAL_STEPS * 0.3) : TOTAL_STEPS;
 
   let attemptsCount = 0;

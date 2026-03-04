@@ -42,6 +42,17 @@ function generateFeedback(analysis: PasswordAnalysis): FeedbackItem[] {
     });
   }
 
+  if (patterns.isDictionaryWord) {
+    items.push({
+      type: 'warning',
+      headline: 'Dictionary word detected — cracked in milliseconds',
+      body: 'Sports teams, cities, names and common words appear in every real cracking ' +
+            'dictionary. "Arsenal" alone appears 600,000+ times in leaked password databases. ' +
+            'Even if a word is long, it has far less security than the same number of random characters, ' +
+            'because attackers skip brute force entirely and go straight to their word list.',
+    });
+  }
+
   if (patterns.hasKeyboardWalk) {
     items.push({
       type: 'warning',
