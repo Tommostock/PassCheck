@@ -1,6 +1,6 @@
 /**
- * LogoIcon.tsx — Sleek, futuristic checkmark logo
- * Solitary minimalist tick with no container
+ * LogoIcon.tsx — Bold phone app icon checkmark
+ * Striking, prominent design for app launcher
  */
 
 export default function LogoIcon() {
@@ -20,25 +20,29 @@ export default function LogoIcon() {
         </linearGradient>
       </defs>
 
-      {/* Sleek, futuristic checkmark - curved strokes for modern feel */}
-      {/* Left curve of checkmark */}
-      <path
-        d="M 28 54 Q 38 62 45 55"
+      {/* Bold, prominent checkmark - app icon style */}
+      {/* Left diagonal of checkmark - thick and commanding */}
+      <line
+        x1="25"
+        y1="55"
+        x2="42"
+        y2="72"
         stroke="url(#logoGradient)"
-        strokeWidth="10"
+        strokeWidth="16"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
       />
 
-      {/* Right curve of checkmark - elegant sweep upward */}
-      <path
-        d="M 45 55 Q 65 35 78 20"
+      {/* Right diagonal of checkmark - bold upward sweep */}
+      <line
+        x1="42"
+        y1="72"
+        x2="80"
+        y2="18"
         stroke="url(#logoGradient)"
-        strokeWidth="10"
+        strokeWidth="16"
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="none"
       />
     </svg>
   );
