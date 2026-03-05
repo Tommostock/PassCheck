@@ -26,6 +26,7 @@ import MatrixRain       from '@/components/MatrixRain';
 
 // Our logic library
 import { analyzePassword, emptyAnalysis, PasswordAnalysis } from '@/lib/analyzer';
+import { estimateCrackTimes } from '@/lib/crackTime';
 
 export default function Home() {
   // ── State ──────────────────────────────────────────────
@@ -120,6 +121,46 @@ export default function Home() {
           {password.length > 0 && (
             <AnalysisBadges analysis={analysis} />
           )}
+        </AnimatePresence>
+
+        {/* Live crack time estimate */}
+        <AnimatePresence>
+          {password.length > 0 && (() => {
+            const times = estimateCrackTimes(analysis.entropy);
+            const offline = times.find(t => t.scenario.label === 'Offline (MD5/SHA1)')!;
+            const online  = times.find(t => t.scenario.label === 'Online (throttled)')!;
+            return (
+              <motion.div
+                key="crack-time"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }}
+                transition={{ duration: 0.3 }}
+                className="grid grid-cols-2 gap-2 pt-1"
+              >
+                {[
+                  { label: 'Hacked database', result: offline },
+                  { label: 'Online attack',   result: online  },
+                ].map(({ label, result }) => (
+                  <div
+                    key={label}
+                    className="rounded-xl p-2.5"
+                    style={{ background: 'rgba(255,255,255,0.04)' }}
+                  >
+                    <div className="text-[9px] text-[var(--text-dim)] uppercase tracking-widest mb-1">
+                      {label}
+                    </div>
+                    <div
+                      className="text-xs font-mono font-medium"
+                      style={{ color: result.isSafe ? '#00FF88' : '#FF4466' }}
+                    >
+                      {result.timeString}
+                    </div>
+                  </div>
+                ))}
+              </motion.div>
+            );
+          })()}
         </AnimatePresence>
       </motion.section>
 
