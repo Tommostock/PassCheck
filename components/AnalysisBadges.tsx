@@ -9,6 +9,10 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { PasswordAnalysis } from '@/lib/analyzer';
+import {
+  AlertTriangleIcon, KeyboardIcon, RepeatIcon, TrendingUpIcon,
+  TypeIcon, ChevronsRightIcon, BookIcon,
+} from './Icons';
 
 interface Props {
   analysis: PasswordAnalysis;
@@ -27,43 +31,59 @@ const CHAR_TYPES = [
 // ─────────────────────────────────────────────────────────
 // PATTERN WARNINGS
 // ─────────────────────────────────────────────────────────
-const PATTERN_WARNINGS = [
+type IconComponent = (props: { size?: number }) => JSX.Element;
+
+interface PatternWarning {
+  key: keyof PasswordAnalysis['patterns'];
+  label: string;
+  tip: string;
+  Icon: IconComponent;
+}
+
+const PATTERN_WARNINGS: PatternWarning[] = [
   {
     key: 'isCommonPassword',
-    label: '⚠ Common password',
+    label: 'Common password',
     tip: 'This password appears in breach databases. Attackers try these first.',
+    Icon: AlertTriangleIcon,
   },
   {
     key: 'hasKeyboardWalk',
-    label: '⌨ Keyboard pattern',
+    label: 'Keyboard pattern',
     tip: 'Sequences like "qwerty" or "asdfgh" are tried by all modern crackers.',
+    Icon: KeyboardIcon,
   },
   {
     key: 'hasRepeats',
-    label: '🔁 Repeated chars',
+    label: 'Repeated chars',
     tip: 'Repetitions like "aaa" or "111" reduce effective password length.',
+    Icon: RepeatIcon,
   },
   {
     key: 'hasSequential',
-    label: '↗ Sequential',
+    label: 'Sequential',
     tip: 'Sequences like "abc" or "123" are quick to guess.',
+    Icon: TrendingUpIcon,
   },
   {
     key: 'hasLeetSpeak',
-    label: '🔤 Leet speak',
+    label: 'Leet speak',
     tip: '"p@ssw0rd" looks clever but attackers know all substitution rules.',
+    Icon: TypeIcon,
   },
   {
     key: 'hasCommonSuffix',
-    label: '🔚 Common suffix',
+    label: 'Common suffix',
     tip: 'Ending with "123" or "!" is always tried. It adds almost no security.',
+    Icon: ChevronsRightIcon,
   },
   {
     key: 'isDictionaryWord',
-    label: '📖 Dictionary word',
+    label: 'Dictionary word',
     tip: 'Sports teams, names, cities and common words are cracked in milliseconds — they\'re the first thing attackers try.',
+    Icon: BookIcon,
   },
-] as const;
+];
 
 export default function AnalysisBadges({ analysis }: Props) {
   if (analysis.length === 0) return null;
@@ -129,7 +149,8 @@ export default function AnalysisBadges({ analysis }: Props) {
                 border: '1px solid rgba(255, 68, 102, 0.2)',
               }}
             >
-              <span className="font-semibold text-[#FF4466] shrink-0 mt-px">
+              <span className="font-semibold text-[#FF4466] shrink-0 mt-px flex items-center gap-1">
+                <warning.Icon size={12} />
                 {warning.label}
               </span>
               <span className="text-[var(--text-secondary)]">{warning.tip}</span>

@@ -105,3 +105,97 @@ export function KeyIcon({ size = 16 }: { size?: number }) {
     </svg>
   );
 }
+
+export function AlertTriangleIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+      <line x1="12" y1="9" x2="12" y2="13" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  );
+}
+
+export function CheckIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+export function XIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+export function ArrowRightIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <line x1="5" y1="12" x2="19" y2="12" />
+      <polyline points="12 5 19 12 12 19" />
+    </svg>
+  );
+}
+
+export function RefreshCwIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="23 4 23 10 17 10" />
+      <polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </svg>
+  );
+}
+
+export function KeyboardIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+      <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10" />
+    </svg>
+  );
+}
+
+export function RepeatIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="17 1 21 5 17 9" />
+      <path d="M3 11V9a4 4 0 0 1 4-4h14" />
+      <polyline points="7 23 3 19 7 15" />
+      <path d="M21 13v2a4 4 0 0 1-4 4H3" />
+    </svg>
+  );
+}
+
+export function TrendingUpIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+      <polyline points="17 6 23 6 23 12" />
+    </svg>
+  );
+}
+
+export function TypeIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="4 7 4 4 20 4 20 7" />
+      <line x1="9" y1="20" x2="15" y2="20" />
+      <line x1="12" y1="4" x2="12" y2="20" />
+    </svg>
+  );
+}
+
+export function ChevronsRightIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg {...s} width={size} height={size}>
+      <polyline points="13 17 18 12 13 7" />
+      <polyline points="6 17 11 12 6 7" />
+    </svg>
+  );
+}

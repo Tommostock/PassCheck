@@ -14,6 +14,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import { AttackState } from '@/lib/attacks';
+import { CheckIcon, XIcon } from './Icons';
 
 interface Props {
   title: string;
@@ -116,8 +117,9 @@ export default function AttackCard({ title, icon, description, state, delay = 0 
                 {'>'} trying: {state.currentAttempt}
               </span>
             ) : (
-              <span style={{ color: isCracked ? '#FF4466' : '#00FF88' }}>
-                {'>'} {isCracked ? '✗ MATCH FOUND' : '✓ NO MATCH'}: {state.currentAttempt}
+              <span style={{ color: isCracked ? '#FF4466' : '#00FF88' }} className="inline-flex items-center gap-1">
+                {'>'} {isCracked ? <XIcon size={11} /> : <CheckIcon size={11} />}
+                {isCracked ? 'MATCH FOUND' : 'NO MATCH'}: {state.currentAttempt}
               </span>
             )}
           </div>

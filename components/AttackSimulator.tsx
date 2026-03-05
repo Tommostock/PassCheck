@@ -15,7 +15,7 @@ import AttackCard from './AttackCard';
 import { PasswordAnalysis } from '@/lib/analyzer';
 import { AttackState, runDictionaryAttack, runHybridAttack, runBruteForce } from '@/lib/attacks';
 import { estimateCrackTimes } from '@/lib/crackTime';
-import { BookIcon, ShuffleIcon, LaptopIcon, LightningIcon, GlobeIcon, SkullIcon, ShieldIcon } from './Icons';
+import { BookIcon, ShuffleIcon, LaptopIcon, LightningIcon, GlobeIcon, SkullIcon, ShieldIcon, RefreshCwIcon } from './Icons';
 
 const ICON_MAP = {
   globe:     <GlobeIcon size={16} />,
@@ -118,7 +118,10 @@ export default function AttackSimulator({ analysis, onComplete }: Props) {
             Simulating attacks...
           </span>
         ) : isDone ? (
-          '⟳ Run simulation again'
+          <span className="flex items-center justify-center gap-2">
+            <RefreshCwIcon size={14} />
+            Run simulation again
+          </span>
         ) : (
           <span className="flex items-center justify-center gap-2">
             <LightningIcon size={14} />

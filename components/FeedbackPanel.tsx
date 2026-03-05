@@ -11,7 +11,7 @@
 
 import { motion } from 'framer-motion';
 import { PasswordAnalysis } from '@/lib/analyzer';
-import { BookIcon, LockIcon } from './Icons';
+import { BookIcon, LockIcon, AlertTriangleIcon, CheckIcon, ArrowRightIcon } from './Icons';
 
 interface Props {
   analysis: PasswordAnalysis;
@@ -202,19 +202,19 @@ const TYPE_STYLES = {
     bg:    'rgba(255, 68, 102, 0.08)',
     border:'rgba(255, 68, 102, 0.25)',
     dot:   '#FF4466',
-    label: '⚠',
+    Icon:  AlertTriangleIcon,
   },
   success: {
     bg:    'rgba(0, 255, 136, 0.06)',
     border:'rgba(0, 255, 136, 0.2)',
     dot:   '#00FF88',
-    label: '✓',
+    Icon:  CheckIcon,
   },
   tip: {
     bg:    'rgba(0, 245, 255, 0.06)',
     border:'rgba(0, 245, 255, 0.2)',
     dot:   '#00F5FF',
-    label: '→',
+    Icon:  ArrowRightIcon,
   },
 };
 
@@ -249,7 +249,7 @@ export default function FeedbackPanel({ analysis }: Props) {
             transition={{ delay: i * 0.06, duration: 0.3 }}
           >
             <div className="flex items-center gap-2">
-              <span className="text-sm">{style.label}</span>
+              <span className="text-sm" style={{ color: style.dot }}><style.Icon size={14} /></span>
               <span
                 className="text-xs font-semibold"
                 style={{ color: style.dot }}
