@@ -9,7 +9,8 @@
  *   - The character set size
  */
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { useEffect } from 'react';
 import { PasswordAnalysis } from '@/lib/analyzer';
 
 interface Props {
@@ -18,6 +19,14 @@ interface Props {
 
 export default function StrengthMeter({ analysis }: Props) {
   const { score, label, color, entropy, charsetSize, length } = analysis;
+
+  // Animated score counter
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (v) => Math.round(v));
+  useEffect(() => {
+    const animation = animate(count, score, { duration: 0.6, ease: 'easeOut' });
+    return animation.stop;
+  }, [score]);
 
   const segments = 5;
   const filledSegments = Math.ceil((score / 100) * segments);
@@ -85,9 +94,12 @@ export default function StrengthMeter({ analysis }: Props) {
           >
             {label}
           </motion.span>
-          <span className="text-xs text-[var(--text-dim)] font-mono">
-            {score.toFixed(0)}/100
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[10px] text-[var(--text-dim)] uppercase tracking-widest">Password Score</span>
+            <span className="text-xs text-[var(--text-dim)] font-mono">
+              <motion.span>{rounded}</motion.span>/100
+            </span>
+          </div>
         </div>
       )}
 
