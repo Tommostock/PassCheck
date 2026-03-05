@@ -7,6 +7,18 @@
  * entirely in the browser with no internet required.
  */
 
+import allEnglishWords from 'an-array-of-english-words';
+
+// ─────────────────────────────────────────────────────────
+// FULL ENGLISH DICTIONARY — All 274,000+ English words,
+// filtered to password-relevant lengths (3–20 characters).
+// Used to detect any real English word used as a password.
+// Stored as a Set for O(1) lookups.
+// ─────────────────────────────────────────────────────────
+export const ENGLISH_DICTIONARY: Set<string> = new Set(
+  (allEnglishWords as string[]).filter(w => w.length >= 3 && w.length <= 20)
+);
+
 // ─────────────────────────────────────────────────────────
 // COMMON PASSWORDS — The most frequently breached passwords.
 // If a user's password is in this list, a dictionary attack

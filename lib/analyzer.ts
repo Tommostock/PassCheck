@@ -9,7 +9,7 @@
  * Everything here runs in your browser. Nothing is sent anywhere.
  */
 
-import { COMMON_PASSWORDS, KEYBOARD_WALKS, COMMON_DICTIONARY_WORDS } from './wordlists';
+import { COMMON_PASSWORDS, KEYBOARD_WALKS, COMMON_DICTIONARY_WORDS, ENGLISH_DICTIONARY } from './wordlists';
 
 // ─────────────────────────────────────────────────────────
 // TYPE DEFINITIONS
@@ -149,15 +149,34 @@ function detectCommonSuffix(password: string): boolean {
  */
 function detectDictionaryWord(password: string): boolean {
   const lower = password.toLowerCase();
-  // Exact match
+
+  // 1. Exact match against curated high-risk list (sports teams, names, cities...)
   if (COMMON_DICTIONARY_WORDS.includes(lower)) return true;
-  // Word + short numeric/symbol suffix, e.g. arsenal123, chelsea!
+
+  // 2. Exact match against full English dictionary (274,000+ words)
+  if (ENGLISH_DICTIONARY.has(lower)) return true;
+
+  // 3. Word + short numeric/symbol suffix against curated list (fastest check first)
   for (const word of COMMON_DICTIONARY_WORDS) {
     if (lower.startsWith(word) && lower.length > word.length) {
       const suffix = lower.slice(word.length);
       if (suffix.length <= 6 && /^[0-9!@#$%^&*\-_]+$/.test(suffix)) return true;
     }
   }
+
+  // 4. Any English word + short numeric/symbol suffix
+  //    Smarter: slice the password at each position and check if that prefix is a
+  //    dictionary word — O(password.length) not O(dictionary.size)
+  for (let i = 4; i < lower.length; i++) {
+    const prefix = lower.slice(0, i);
+    const suffix = lower.slice(i);
+    if (
+      ENGLISH_DICTIONARY.has(prefix) &&
+      suffix.length <= 6 &&
+      /^[0-9!@#$%^&*\-_]+$/.test(suffix)
+    ) return true;
+  }
+
   return false;
 }
 

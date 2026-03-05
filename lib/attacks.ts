@@ -12,7 +12,7 @@
 
 import { PasswordAnalysis } from './analyzer';
 import { COMMON_PASSWORDS, DICTIONARY_WORDS, COMMON_SUFFIXES,
-         DISPLAY_WORDS_DICT, DISPLAY_WORDS_HYBRID, COMMON_DICTIONARY_WORDS } from './wordlists';
+         DISPLAY_WORDS_DICT, DISPLAY_WORDS_HYBRID, COMMON_DICTIONARY_WORDS, ENGLISH_DICTIONARY } from './wordlists';
 
 // ─────────────────────────────────────────────────────────
 // TYPE DEFINITIONS
@@ -142,8 +142,12 @@ export async function runHybridAttack(
 
   // Crack if: dictionary word (with or without suffix), leet speak, or common suffix on any word
   const lowerPwd = analysis.password.toLowerCase();
+  // Check prefix against full English dictionary (O(password.length) via Set lookups)
+  const hasEnglishPrefix = Array.from({ length: lowerPwd.length - 1 }, (_, i) => lowerPwd.slice(0, i + 4))
+    .some(prefix => ENGLISH_DICTIONARY.has(prefix));
   const baseWordMatch = COMMON_DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w))
-    || DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w));
+    || DICTIONARY_WORDS.find(w => lowerPwd.startsWith(w))
+    || (hasEnglishPrefix ? lowerPwd : undefined);
   const suffixMatch   = COMMON_SUFFIXES.find(s => lowerPwd.endsWith(s));
   const willCrack     = (!!baseWordMatch && !!suffixMatch)
     || analysis.patterns.hasLeetSpeak
