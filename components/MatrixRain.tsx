@@ -21,7 +21,7 @@ export default function MatrixRain() {
       id: i,
       chars: generateChars(),
       duration: 8 + Math.random() * 6, // 8-14 seconds
-      delay: Math.random() * 3, // 0-3 seconds stagger
+      delay: -(4 + Math.random() * 8), // Negative delay so rain starts mid-waterfall, not bunched at top
     }));
 
     setColumns(columnsArray);
@@ -41,8 +41,8 @@ export default function MatrixRain() {
             style={{
               left: `${(col.id / columns.length) * 100}%`,
               width: '2em',
-              color: 'rgba(0, 255, 136, 0.15)',
-              textShadow: '0 0 6px rgba(0, 255, 136, 0.2)',
+              color: 'rgba(0, 255, 136, 0.08)',
+              textShadow: '0 0 6px rgba(0, 255, 136, 0.1)',
               animation: `matrix-fall ${col.duration}s linear ${col.delay}s infinite`,
               fontWeight: '700',
               letterSpacing: '0.1em',
@@ -61,10 +61,10 @@ export default function MatrixRain() {
             transform: translateY(-100%);
             opacity: 0;
           }
-          10% {
+          5% {
             opacity: 1;
           }
-          90% {
+          95% {
             opacity: 1;
           }
           100% {
