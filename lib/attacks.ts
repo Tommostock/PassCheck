@@ -213,12 +213,13 @@ export function runBruteForce(analysis: PasswordAnalysis): AttackState {
 
   // Format the time
   let timeStr: string;
+  const plural = (n: number, unit: string) => `${n} ${unit}${n === 1 ? '' : 's'}`;
   if (secondsTocrack < 1)                    timeStr = 'instantly';
   else if (secondsTocrack < 60)              timeStr = `${secondsTocrack.toFixed(0)}s`;
-  else if (secondsTocrack < 3600)            timeStr = `${(secondsTocrack/60).toFixed(0)} minutes`;
-  else if (secondsTocrack < 86400)           timeStr = `${(secondsTocrack/3600).toFixed(0)} hours`;
-  else if (secondsTocrack < 2592000)         timeStr = `${(secondsTocrack/86400).toFixed(0)} days`;
-  else if (secondsTocrack < 31536000)        timeStr = `${(secondsTocrack/2592000).toFixed(0)} months`;
+  else if (secondsTocrack < 3600)            timeStr = plural(+(secondsTocrack/60).toFixed(0), 'minute');
+  else if (secondsTocrack < 86400)           timeStr = plural(+(secondsTocrack/3600).toFixed(0), 'hour');
+  else if (secondsTocrack < 2592000)         timeStr = plural(+(secondsTocrack/86400).toFixed(0), 'day');
+  else if (secondsTocrack < 31536000)        timeStr = plural(+(secondsTocrack/2592000).toFixed(0), 'month');
   else if (secondsTocrack < 1e10)            timeStr = `${(secondsTocrack/31536000).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} years`;
   else if (secondsTocrack < 3.15e13)         timeStr = 'thousands of years';
   else if (secondsTocrack < 3.15e16)         timeStr = 'millions of years';

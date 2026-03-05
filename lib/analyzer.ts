@@ -52,6 +52,8 @@ export interface PasswordAnalysis {
     hasCommonSuffix: boolean;    // ends in 123, !, 2024 etc.
     isDictionaryWord: boolean;   // sports team, name, city, common word
     hasOnlyLowercase: boolean;   // no uppercase, digits or symbols — reduces search space dramatically
+    hasOnlyDigits: boolean;      // digits only — charset of 10, cracked in seconds
+    hasOnlySymbols: boolean;     // symbols only — no letters or digits
   };
 
   /** Penalty-adjusted score from 0 to 100 */
@@ -235,6 +237,8 @@ export function analyzePassword(password: string): PasswordAnalysis {
     hasCommonSuffix:  detectCommonSuffix(password),
     isDictionaryWord: detectDictionaryWord(password),
     hasOnlyLowercase: has.lower && !has.upper && !has.digit && !has.symbol,
+    hasOnlyDigits:    has.digit && !has.lower && !has.upper && !has.symbol,
+    hasOnlySymbols:   has.symbol && !has.lower && !has.upper && !has.digit,
   };
 
   // ── 5. SCORING ────────────────────────────────────────
@@ -245,12 +249,18 @@ export function analyzePassword(password: string): PasswordAnalysis {
   // Apply penalties for detected weaknesses
   if (patterns.isCommonPassword) score  = Math.min(score, 5);   // almost zero
   if (patterns.isDictionaryWord) score  = Math.min(score, 20);  // clamp to Weak — dictionary words are cracked in milliseconds
-  if (patterns.hasOnlyLowercase) score  = Math.min(score, 35);  // clamp to Weak — lowercase-only halves the effective search space
+  if (patterns.hasOnlyLowercase) score  = Math.min(score, 35);  // clamp to Weak — single charset
+  if (patterns.hasOnlyDigits)    score  = Math.min(score, 35);  // clamp to Weak — digits only (charset 10)
+  if (patterns.hasOnlySymbols)   score  = Math.min(score, 35);  // clamp to Weak — symbols only
   if (patterns.hasKeyboardWalk)  score -= 20;
   if (patterns.hasRepeats)       score -= 15;
   if (patterns.hasSequential)    score -= 10;
   if (patterns.hasLeetSpeak)     score -= 15;
   if (patterns.hasCommonSuffix)  score -= 10;
+
+  // Re-enforce dictionary word floor: additional penalties should not drag a dictionary
+  // word below Weak territory. Common passwords are excluded (they stay Very Weak).
+  if (patterns.isDictionaryWord && !patterns.isCommonPassword) score = Math.max(score, 20);
 
   // Bonus for length — length is one of the most important factors
   if (password.length >= 16) score += 10;

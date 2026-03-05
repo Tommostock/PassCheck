@@ -58,6 +58,11 @@ const PATTERN_WARNINGS = [
     label: '🔚 Common suffix',
     tip: 'Ending with "123" or "!" is always tried. It adds almost no security.',
   },
+  {
+    key: 'isDictionaryWord',
+    label: '📖 Dictionary word',
+    tip: 'Sports teams, names, cities and common words are cracked in milliseconds — they\'re the first thing attackers try.',
+  },
 ] as const;
 
 export default function AnalysisBadges({ analysis }: Props) {
