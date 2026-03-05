@@ -11,6 +11,7 @@
 
 import { motion } from 'framer-motion';
 import { PasswordAnalysis } from '@/lib/analyzer';
+import { BookIcon, LockIcon } from './Icons';
 
 interface Props {
   analysis: PasswordAnalysis;
@@ -197,7 +198,7 @@ const TYPE_STYLES = {
     bg:    'rgba(0, 245, 255, 0.06)',
     border:'rgba(0, 245, 255, 0.2)',
     dot:   '#00F5FF',
-    label: '💡',
+    label: '→',
   },
 };
 
@@ -213,7 +214,7 @@ export default function FeedbackPanel({ analysis }: Props) {
     >
       {/* ── Section header ───────────────────────────────── */}
       <div className="flex items-center gap-2 mb-1">
-        <span className="text-base">🎓</span>
+        <span className="text-[var(--text-secondary)]"><BookIcon size={16} /></span>
         <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)]">
           Why is it {analysis.score < 60 ? 'weak' : 'strong'}?
         </h2>
@@ -272,7 +273,7 @@ export default function FeedbackPanel({ analysis }: Props) {
       <div
         className="text-center text-[10px] text-[var(--text-dim)] py-2 px-4"
       >
-        🔒 No passwords are stored or transmitted. All analysis runs locally in your browser.
+        <span className="inline-flex items-center gap-1"><LockIcon size={10} /> No passwords are stored or transmitted. All analysis runs locally in your browser.</span>
       </div>
     </motion.div>
   );

@@ -12,11 +12,12 @@
  */
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { ReactNode } from 'react';
 import { AttackState } from '@/lib/attacks';
 
 interface Props {
   title: string;
-  icon: string;
+  icon: ReactNode;
   description: string;      // Short explanation shown in the card header
   state: AttackState;
   delay?: number;           // Animation stagger delay
@@ -52,7 +53,7 @@ export default function AttackCard({ title, icon, description, state, delay = 0 
       {/* ── Header ───────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center gap-2">
-          <span className="text-lg">{icon}</span>
+          <span className="flex items-center text-[var(--text-secondary)]">{icon}</span>
           <div>
             <h3
               className="text-sm font-bold tracking-wider uppercase"

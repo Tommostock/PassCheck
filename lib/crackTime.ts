@@ -24,7 +24,7 @@ export const HASH_RATES = {
     label: 'Online (throttled)',
     subtitle: 'Website with login rate-limiting',
     attemptsPerSecond: 10,
-    icon: '🌐',
+    icon: 'globe',
   },
 
   // Scenario 2: Online attack, no rate limiting
@@ -33,7 +33,7 @@ export const HASH_RATES = {
     label: 'Online (unprotected)',
     subtitle: 'Unprotected API or login endpoint',
     attemptsPerSecond: 1_000,
-    icon: '⚡',
+    icon: 'lightning',
   },
 
   // Scenario 3: Offline attack against MD5/SHA1 hashes
@@ -42,7 +42,7 @@ export const HASH_RATES = {
     label: 'Offline (MD5/SHA1)',
     subtitle: 'Stolen database with weak hashing',
     attemptsPerSecond: 10_000_000_000, // 10 billion/sec on modern GPU
-    icon: '💀',
+    icon: 'skull',
   },
 
   // Scenario 4: Offline attack against bcrypt
@@ -52,7 +52,7 @@ export const HASH_RATES = {
     label: 'Offline (bcrypt)',
     subtitle: 'Stolen database with strong hashing',
     attemptsPerSecond: 10_000, // 10 thousand/sec — bcrypt is slow by design!
-    icon: '🔒',
+    icon: 'shield',
   },
 } as const;
 

@@ -19,54 +19,77 @@ interface Props {
 export default function StrengthMeter({ analysis }: Props) {
   const { score, label, color, entropy, charsetSize, length } = analysis;
 
-  // Map score to a number of filled "segments" out of 5
   const segments = 5;
   const filledSegments = Math.ceil((score / 100) * segments);
+  const isVeryStrong = label === 'Very Strong';
 
-  // Segment colours from weakest to strongest
-  const segmentColors = ['#FF4466', '#FF8C42', '#FFD700', '#4488FF', '#00FF88'];
+  // Segment colours: dark red → light red → orange → yellow → green
+  const segmentColors = ['#CC0000', '#FF4444', '#FF8800', '#FFD700', '#00FF88'];
+  const segmentGlows = [
+    '0 0 8px 2px rgba(204,0,0,0.7)',
+    '0 0 8px 2px rgba(255,68,68,0.7)',
+    '0 0 8px 2px rgba(255,136,0,0.7)',
+    '0 0 8px 2px rgba(255,215,0,0.7)',
+    '0 0 8px 2px rgba(0,255,136,0.7)',
+  ];
 
   return (
     <div className="space-y-3">
 
       {/* ── Segmented strength bar ────────────────────────── */}
       <div className="flex gap-1.5">
-        {Array.from({ length: segments }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="h-2 flex-1 rounded-full"
-            style={{
-              backgroundColor: i < filledSegments ? segmentColors[i] : 'rgba(255,255,255,0.08)',
-            }}
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{
-              scaleX: length > 0 ? 1 : 0,
-              opacity: length > 0 ? 1 : 0,
-            }}
-            transition={{ duration: 0.3, delay: i * 0.06 }}
-          />
-        ))}
+        {Array.from({ length: segments }).map((_, i) => {
+          const isFilled = i < filledSegments;
+          return isVeryStrong && isFilled ? (
+            <motion.div
+              key={i}
+              className="h-2 flex-1 rounded-full"
+              style={{
+                backgroundColor: segmentColors[i],
+                boxShadow: segmentGlows[i],
+              }}
+              animate={{
+                filter: ['brightness(1)', 'brightness(1.25)', 'brightness(1)'],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay: i * 0.18,
+              }}
+            />
+          ) : (
+            <div
+              key={i}
+              className="h-2 flex-1 rounded-full"
+              style={{
+                backgroundColor: isFilled ? segmentColors[i] : 'rgba(255,255,255,0.08)',
+                boxShadow: isFilled ? segmentGlows[i] : 'none',
+                display: length > 0 ? 'block' : 'none',
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* ── Label + score ─────────────────────────────────── */}
-      <div className="flex items-center justify-between">
-        <motion.span
-          className="text-sm font-semibold tracking-wider uppercase"
-          style={{ color: length > 0 ? color : 'var(--text-dim)' }}
-          key={label} // re-animate when label changes
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          {length > 0 ? label : 'Enter a password'}
-        </motion.span>
-
-        {length > 0 && (
+      {length > 0 && (
+        <div className="flex items-center justify-between">
+          <motion.span
+            className="text-sm font-semibold tracking-wider uppercase"
+            style={{ color, textShadow: `0 0 10px ${color}99` }}
+            key={label}
+            initial={{ opacity: 0, x: -8 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.25 }}
+          >
+            {label}
+          </motion.span>
           <span className="text-xs text-[var(--text-dim)] font-mono">
             {score.toFixed(0)}/100
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* ── Stats row: entropy, charset, length ───────────── */}
       {length > 0 && (
@@ -85,7 +108,6 @@ export default function StrengthMeter({ analysis }: Props) {
   );
 }
 
-/** A small stat display chip */
 function StatChip({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)' }}>

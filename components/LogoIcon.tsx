@@ -14,8 +14,8 @@ export default function LogoIcon() {
     >
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#11b67a" />
-          <stop offset="100%" stopColor="#006a4d" />
+          <stop offset="0%" stopColor="#00FF88" />
+          <stop offset="100%" stopColor="#11b67a" />
         </linearGradient>
       </defs>
 

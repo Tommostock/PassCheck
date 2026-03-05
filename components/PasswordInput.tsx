@@ -12,6 +12,7 @@
 
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { KeyIcon } from './Icons';
 
 interface Props {
   value: string;
@@ -24,11 +25,11 @@ export default function PasswordInput({ value, onChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
 
       {/* ── Label ─────────────────────────────────────────── */}
       <label className="flex items-center gap-2 text-xs text-[var(--text-secondary)] uppercase tracking-widest">
-        <span className="text-base">🔐</span>
+        <KeyIcon size={16} />
         Enter a test password
         <span
           className="ml-auto text-[9px] px-1.5 py-0.5 rounded-full whitespace-nowrap"
@@ -36,6 +37,8 @@ export default function PasswordInput({ value, onChange }: Props) {
             background: 'rgba(180, 0, 20, 0.15)',
             color: '#ff1a1a',
             border: '1px solid rgba(180, 0, 20, 0.5)',
+            textShadow: '0 0 10px rgba(255, 26, 26, 0.65)',
+            boxShadow: '0 0 8px rgba(255, 26, 26, 0.4)',
           }}
         >
           not your real one!

@@ -16,6 +16,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Our components
 import PasswordInput    from '@/components/PasswordInput';
+import { SwordsIcon, LockIcon } from '@/components/Icons';
 import StrengthMeter    from '@/components/StrengthMeter';
 import AnalysisBadges   from '@/components/AnalysisBadges';
 import AttackSimulator  from '@/components/AttackSimulator';
@@ -68,17 +69,21 @@ export default function Home() {
         transition={{ duration: 0.5 }}
       >
         {/* App icon / logo */}
-        <div className="inline-flex items-center justify-center mb-3">
+        <div
+          className="inline-flex items-center justify-center mb-3"
+          style={{ filter: 'drop-shadow(0 0 14px rgba(0,255,136,0.75)) drop-shadow(0 0 28px rgba(0,255,136,0.35))' }}
+        >
           <LogoIcon />
         </div>
 
         <h1
           className="text-2xl font-bold tracking-tight"
           style={{
-            background: 'linear-gradient(135deg, #11b67a, #006a4d)',
+            background: 'linear-gradient(135deg, #00FF88, #11b67a)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
+            filter: 'drop-shadow(0 0 12px rgba(0,255,136,0.65))',
           }}
         >
           PassCheck
@@ -87,13 +92,13 @@ export default function Home() {
           Password Strength Simulator
         </p>
         <p className="text-[10px] text-[var(--text-dim)] mt-1">
-          Educational · Private · Free
+          Brought to you by Safe &amp; Secure
         </p>
       </motion.header>
 
       {/* ── Password input card ────────────────────────────── */}
       <motion.section
-        className="glass-card p-4 space-y-4"
+        className={`glass-card space-y-4 px-4 pt-4 ${password.length > 0 ? 'pb-4' : 'pb-3'}`}
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
@@ -144,7 +149,7 @@ export default function Home() {
         transition={{ duration: 0.4, delay: 0.2 }}
       >
         <div className="flex items-center gap-2 px-1">
-          <span className="text-base">⚔️</span>
+          <span className="text-[var(--text-secondary)]"><SwordsIcon size={16} /></span>
           <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--text-secondary)]">
             Attack Simulation
           </h2>
@@ -173,8 +178,8 @@ export default function Home() {
 
       {/* ── Footer ─────────────────────────────────────────────── */}
       <footer className="text-center pb-4 space-y-1">
-        <p className="text-[10px] text-[var(--text-dim)]">
-          🔒 All analysis runs locally in your browser
+        <p className="text-[10px] text-[var(--text-dim)] flex items-center justify-center gap-1">
+          <LockIcon size={10} /> All analysis runs locally in your browser
         </p>
         <p className="text-[10px] text-[var(--text-dim)]">
           No passwords are ever stored or transmitted

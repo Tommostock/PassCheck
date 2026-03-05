@@ -244,10 +244,10 @@ export function analyzePassword(password: string): PasswordAnalysis {
   let label: PasswordAnalysis['label'];
   let color: string;
 
-  if (score < 20)      { label = 'Very Weak';  color = '#FF4466'; }
-  else if (score < 40) { label = 'Weak';        color = '#FF8C42'; }
-  else if (score < 60) { label = 'Fair';        color = '#FFD700'; }
-  else if (score < 80) { label = 'Strong';      color = '#4488FF'; }
+  if (score < 20)      { label = 'Very Weak';  color = '#CC0000'; }
+  else if (score < 40) { label = 'Weak';        color = '#FF4444'; }
+  else if (score < 60) { label = 'Fair';        color = '#FF8800'; }
+  else if (score < 80) { label = 'Strong';      color = '#FFD700'; }
   else                  { label = 'Very Strong'; color = '#00FF88'; }
 
   return {

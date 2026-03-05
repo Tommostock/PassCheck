@@ -24,17 +24,17 @@
   --bg-border:  #2e2e2e;
 
   /* Brand colours — green palette */
-  --cyan:      #11b67a;
-  --cyan-glow: #11b67a40;
-  --green:     #006a4d;
+  --cyan:      #00FF88;
+  --cyan-glow: rgba(0,255,136,0.25);
+  --green:     #11b67a;
   --red:       #FF4466;
   --orange:    #FF8C42;
   --yellow:    #FFD700;
 
   /* Text */
   --text-primary:   #e8e8e8;
-  --text-secondary: #11b67a;
-  --text-dim:       #006a4d;
+  --text-secondary: #00FF88;
+  --text-dim:       #11b67a;
 }
 
 /* ── Base reset ─────────────────────────────────────────── */
@@ -79,7 +79,7 @@ body {
   .glass-card {
     @apply rounded-2xl border;
     background: rgba(26, 26, 26, 0.85);
-    border-color: rgba(17, 182, 122, 0.25);
+    border-color: rgba(0, 255, 136, 0.18);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -91,10 +91,17 @@ body {
                 0 0 20px rgba(0, 245, 255, 0.1);
   }
 
-  /* Terminal text style — monospace, dim green, used in attack panels */
+  /* Terminal text style — monospace, bright green, used in attack panels */
   .terminal-text {
     @apply font-mono text-sm;
-    color: #00dd99;
+    color: #00FF88;
+    text-shadow: 0 0 8px rgba(0,255,136,0.5);
+  }
+
+  /* Neon glow for all secondary green text */
+  [class*="text-secondary"],
+  [class*="text-\[var\(--text-secondary\)\]"] {
+    text-shadow: 0 0 10px rgba(0,255,136,0.5);
   }
 
   /* Status badge for CRACKED / RESISTANT results */

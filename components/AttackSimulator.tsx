@@ -15,6 +15,14 @@ import AttackCard from './AttackCard';
 import { PasswordAnalysis } from '@/lib/analyzer';
 import { AttackState, runDictionaryAttack, runHybridAttack, runBruteForce } from '@/lib/attacks';
 import { estimateCrackTimes } from '@/lib/crackTime';
+import { BookIcon, ShuffleIcon, LaptopIcon, LightningIcon, GlobeIcon, SkullIcon, ShieldIcon } from './Icons';
+
+const ICON_MAP = {
+  globe:     <GlobeIcon size={16} />,
+  lightning: <LightningIcon size={16} />,
+  skull:     <SkullIcon size={16} />,
+  shield:    <ShieldIcon size={16} />,
+};
 
 interface Props {
   analysis: PasswordAnalysis;
@@ -112,7 +120,10 @@ export default function AttackSimulator({ analysis, onComplete }: Props) {
         ) : isDone ? (
           '⟳ Run simulation again'
         ) : (
-          '⚡ Simulate attacks'
+          <span className="flex items-center justify-center gap-2">
+            <LightningIcon size={14} />
+            Simulate attacks
+          </span>
         )}
       </motion.button>
 
@@ -126,21 +137,21 @@ export default function AttackSimulator({ analysis, onComplete }: Props) {
           >
             <AttackCard
               title="Dictionary Attack"
-              icon="📖"
+              icon={<BookIcon size={18} />}
               description="Checks against a list of common & breached passwords"
               state={dictState}
               delay={0}
             />
             <AttackCard
               title="Hybrid Attack"
-              icon="🔀"
+              icon={<ShuffleIcon size={18} />}
               description="Dictionary words combined with numbers & symbols"
               state={hybridState}
               delay={0.05}
             />
             <AttackCard
               title="Brute Force"
-              icon="💻"
+              icon={<LaptopIcon size={18} />}
               description="Every possible combination — guaranteed to crack eventually"
               state={bruteState}
               delay={0.1}
@@ -169,7 +180,7 @@ export default function AttackSimulator({ analysis, onComplete }: Props) {
                 >
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <span className="text-sm">{scenario.icon}</span>
+                      <span className="text-[var(--text-secondary)]">{ICON_MAP[scenario.icon as keyof typeof ICON_MAP]}</span>
                       <span className="text-xs text-[var(--text-primary)]">{scenario.label}</span>
                     </div>
                     <div className="text-[10px] text-[var(--text-dim)] ml-5">{scenario.subtitle}</div>
