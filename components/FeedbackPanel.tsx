@@ -11,7 +11,7 @@
 
 import { motion } from 'framer-motion';
 import { PasswordAnalysis } from '@/lib/analyzer';
-import { BookIcon, LockIcon, AlertTriangleIcon, CheckIcon, ArrowRightIcon } from './Icons';
+import { BookIcon, LockIcon, AlertTriangleIcon, CheckIcon, ArrowRightIcon, WrenchIcon } from './Icons';
 
 interface Props {
   analysis: PasswordAnalysis;
@@ -194,6 +194,56 @@ function generateFeedback(analysis: PasswordAnalysis): FeedbackItem[] {
 }
 
 // ─────────────────────────────────────────────────────────
+// QUICK FIXES
+// Specific, actionable steps to improve the current password.
+// ─────────────────────────────────────────────────────────
+
+interface QuickFix {
+  text: string;
+}
+
+function generateQuickFixes(analysis: PasswordAnalysis): QuickFix[] {
+  const { patterns, has, length } = analysis;
+  const fixes: QuickFix[] = [];
+
+  if (patterns.isCommonPassword) {
+    return [{ text: 'Replace entirely — this exact password appears in every attacker\'s breach list' }];
+  }
+
+  if (patterns.isDictionaryWord) {
+    fixes.push({ text: 'Replace the word or name with random characters, or use a passphrase of 4+ unrelated words' });
+  }
+  if (patterns.hasKeyboardWalk) {
+    fixes.push({ text: 'Remove the keyboard pattern (qwerty, asdf, 12345...)' });
+  }
+  if (patterns.hasLeetSpeak) {
+    fixes.push({ text: 'Remove leet substitutions (@ for a, 0 for o) — crackers apply these automatically' });
+  }
+  if (patterns.hasCommonSuffix) {
+    fixes.push({ text: 'Remove the predictable ending — insert numbers or symbols in the middle instead' });
+  }
+  if (patterns.hasRepeats) {
+    fixes.push({ text: 'Replace repeated characters (aaa, 111) with varied ones' });
+  }
+  if (!has.symbol) {
+    fixes.push({ text: 'Add at least one symbol — ! @ # $ % ^ & *' });
+  }
+  if (!has.upper) {
+    fixes.push({ text: 'Capitalise at least one letter' });
+  }
+  if (!has.digit) {
+    fixes.push({ text: 'Add at least one number' });
+  }
+  const target = length < 12 ? 12 : 15;
+  if (length < target) {
+    const needed = target - length;
+    fixes.push({ text: `Add ${needed} more character${needed === 1 ? '' : 's'} to reach the recommended ${target}` });
+  }
+
+  return fixes;
+}
+
+// ─────────────────────────────────────────────────────────
 // COMPONENT
 // ─────────────────────────────────────────────────────────
 
@@ -220,6 +270,8 @@ const TYPE_STYLES = {
 
 export default function FeedbackPanel({ analysis }: Props) {
   const feedback = generateFeedback(analysis);
+  const fixes = generateQuickFixes(analysis);
+  const showFixes = fixes.length > 0 && analysis.score < 80;
 
   return (
     <motion.div
@@ -228,6 +280,32 @@ export default function FeedbackPanel({ analysis }: Props) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
+      {/* ── How to fix it ────────────────────────────────── */}
+      {showFixes && (
+        <motion.div
+          className="rounded-xl p-3"
+          style={{ background: 'rgba(255, 215, 0, 0.06)', border: '1px solid rgba(255, 215, 0, 0.25)' }}
+          initial={{ opacity: 0, x: -12 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex items-center gap-2 mb-2">
+            <span style={{ color: '#FFD700' }}><WrenchIcon size={13} /></span>
+            <span className="text-xs font-bold uppercase tracking-widest" style={{ color: '#FFD700' }}>
+              How to fix it
+            </span>
+          </div>
+          <ul className="space-y-1.5">
+            {fixes.map((fix, i) => (
+              <li key={i} className="flex items-start gap-2 text-[11px] text-[var(--text-secondary)]">
+                <span style={{ color: '#FFD700', marginTop: 1, flexShrink: 0 }}><ArrowRightIcon size={11} /></span>
+                {fix.text}
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
+
       {/* ── Section header ───────────────────────────────── */}
       <div className="flex items-center gap-2 mb-1">
         <span className="text-[var(--text-secondary)]"><BookIcon size={16} /></span>
