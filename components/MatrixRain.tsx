@@ -6,22 +6,22 @@ export default function MatrixRain() {
   const [columns, setColumns] = useState<Array<{ id: number; chars: string; duration: number; delay: number }>>([]);
 
   useEffect(() => {
-    // Generate random characters (0s and 1s for that matrix feel)
-    const generateChars = () => {
-      const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+    // Generate a vertical string of binary digits (0s and 1s)
+    const generateDigits = () => {
       let result = '';
-      for (let i = 0; i < 15; i++) {
-        result += chars[Math.floor(Math.random() * chars.length)];
+      for (let i = 0; i < 25; i++) {
+        result += Math.random() > 0.5 ? '1' : '0';
+        result += '\n';
       }
       return result;
     };
 
     // Create columns of falling text
-    const columnsArray = Array.from({ length: 40 }, (_, i) => ({
+    const columnsArray = Array.from({ length: 50 }, (_, i) => ({
       id: i,
-      chars: generateChars(),
-      duration: 8 + Math.random() * 6, // 8-14 seconds
-      delay: -(4 + Math.random() * 8), // Negative delay so rain starts mid-waterfall, not bunched at top
+      chars: generateDigits(),
+      duration: 10 + Math.random() * 8, // 10-18 seconds
+      delay: -(5 + Math.random() * 10), // Negative delay so rain starts mid-waterfall, not bunched at top
     }));
 
     setColumns(columnsArray);
@@ -37,16 +37,15 @@ export default function MatrixRain() {
         {columns.map((col) => (
           <div
             key={col.id}
-            className="absolute top-0 text-xs font-mono whitespace-pre"
+            className="absolute top-0 text-xs font-mono whitespace-pre font-bold"
             style={{
               left: `${(col.id / columns.length) * 100}%`,
-              width: '2em',
+              width: '1.2em',
               color: 'rgba(0, 255, 136, 0.08)',
               textShadow: '0 0 6px rgba(0, 255, 136, 0.1)',
               animation: `matrix-fall ${col.duration}s linear ${col.delay}s infinite`,
-              fontWeight: '700',
-              letterSpacing: '0.1em',
-              lineHeight: '1.2',
+              lineHeight: '1.1',
+              letterSpacing: '0.05em',
             }}
           >
             {col.chars}
