@@ -171,7 +171,23 @@ function generateFeedback(analysis: PasswordAnalysis): FeedbackItem[] {
     type: 'tip',
     headline: 'Try the "three random words" approach',
     body: 'A passphrase like "Coral-Fence-Album-Seven" is easy to remember, over 20 characters, ' +
-          'and far harder to crack than "P@ssw0rd!". Use a password manager for everything else.',
+          'and far harder to crack than "P@ssw0rd!".',
+  });
+
+  items.push({
+    type: 'tip',
+    headline: 'Use a password manager for unique passwords everywhere',
+    body: 'Password managers (Bitwarden, 1Password, Dashlane) generate and securely store complex passwords ' +
+          'for every account. This way you only need to remember one master password. If one service is breached, ' +
+          'your other accounts remain safe because each has a unique password.',
+  });
+
+  items.push({
+    type: 'tip',
+    headline: 'Enable multi-factor authentication (MFA) on critical accounts',
+    body: 'Even a perfect password can be stolen. MFA (2FA) adds a second verification step — usually your phone. ' +
+          'Enable it on email, banking, social media, and work accounts. Options include authenticator apps (Authy, Google Authenticator), ' +
+          'SMS codes, or hardware security keys. This is the single most effective defence against account takeover.',
   });
 
   return items;
