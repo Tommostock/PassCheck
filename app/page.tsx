@@ -22,6 +22,7 @@ import AnalysisBadges   from '@/components/AnalysisBadges';
 import AttackSimulator  from '@/components/AttackSimulator';
 import FeedbackPanel    from '@/components/FeedbackPanel';
 import LogoIcon         from '@/components/LogoIcon';
+import MatrixRain       from '@/components/MatrixRain';
 
 // Our logic library
 import { analyzePassword, emptyAnalysis, PasswordAnalysis } from '@/lib/analyzer';
@@ -59,7 +60,9 @@ export default function Home() {
 
   // ── Render ─────────────────────────────────────────────
   return (
-    <main className="min-h-screen w-full max-w-lg mx-auto px-4 py-6 space-y-4 pb-12">
+    <main className="min-h-screen w-full max-w-lg mx-auto px-4 py-6 space-y-4 pb-12 relative">
+      {/* Matrix rain background */}
+      <MatrixRain />
 
       {/* ── App header ─────────────────────────────────────── */}
       <motion.header
