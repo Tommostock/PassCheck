@@ -23,13 +23,13 @@ export default function StrengthMeter({ analysis }: Props) {
   const filledSegments = Math.ceil((score / 100) * segments);
   const isVeryStrong = label === 'Very Strong';
 
-  // Segment colours: dark red → light red → orange → yellow → green
-  const segmentColors = ['#CC0000', '#FF4444', '#FF8800', '#FFD700', '#00FF88'];
+  // Segment colours: red → orange → yellow → blue → green
+  const segmentColors = ['#FF3333', '#FF8C00', '#FFD700', '#3B9EFF', '#00FF88'];
   const segmentGlows = [
-    '0 0 8px 2px rgba(204,0,0,0.7)',
-    '0 0 8px 2px rgba(255,68,68,0.7)',
-    '0 0 8px 2px rgba(255,136,0,0.7)',
+    '0 0 8px 2px rgba(255,51,51,0.7)',
+    '0 0 8px 2px rgba(255,140,0,0.7)',
     '0 0 8px 2px rgba(255,215,0,0.7)',
+    '0 0 8px 2px rgba(59,158,255,0.7)',
     '0 0 8px 2px rgba(0,255,136,0.7)',
   ];
 
