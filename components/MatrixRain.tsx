@@ -29,8 +29,14 @@ export default function MatrixRain() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
-      {/* Gradient mask to fade out text behind content */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950" style={{ zIndex: 1 }} />
+      {/* Gradient mask to fade out text before password input */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 1,
+          background: 'linear-gradient(to bottom, transparent 0%, transparent 35%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 1) 65%)'
+        }}
+      />
 
       {/* Matrix columns */}
       <div className="relative w-full h-full">
