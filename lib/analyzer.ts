@@ -260,6 +260,21 @@ export function analyzePassword(password: string): PasswordAnalysis {
   score = Math.max(0, Math.min(100, score));
 
   // ── 6. STRENGTH LABEL & COLOUR ───────────────────────
+  // "Very Strong" requires ALL four criteria to be met:
+  //   • 12+ characters
+  //   • At least one digit
+  //   • At least one symbol
+  //   • Both uppercase and lowercase letters
+  // A password that fails any requirement is capped at "Strong" (79).
+  const meetsVeryStrongCriteria =
+    password.length >= 12 &&
+    has.digit &&
+    has.symbol &&
+    has.upper &&
+    has.lower;
+
+  if (!meetsVeryStrongCriteria) score = Math.min(score, 79);
+
   let label: PasswordAnalysis['label'];
   let color: string;
 
