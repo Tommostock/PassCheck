@@ -71,7 +71,7 @@ export default function Home() {
         {/* App icon / logo */}
         <div
           className="inline-flex items-center justify-center mb-3"
-          style={{ filter: 'drop-shadow(0 0 14px rgba(0,255,136,0.75)) drop-shadow(0 0 28px rgba(0,255,136,0.35))' }}
+          style={{ filter: 'drop-shadow(0 0 8px rgba(0,255,136,1)) drop-shadow(0 0 16px rgba(0,255,136,0.7))' }}
         >
           <LogoIcon />
         </div>
