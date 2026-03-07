@@ -28,7 +28,7 @@ export default function PasswordInput({ value, onChange }: Props) {
     <div className="space-y-3">
 
       {/* ── Label ─────────────────────────────────────────── */}
-      <label className="flex items-center gap-2 text-xs text-[var(--text-secondary)] uppercase tracking-widest">
+      <label className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-[var(--text-secondary)] uppercase tracking-widest">
         <KeyIcon size={16} />
         Enter a test password
         <span

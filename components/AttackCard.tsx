@@ -111,15 +111,16 @@ export default function AttackCard({ title, icon, description, state, delay = 0 
           <div className="text-[var(--text-dim)] text-[10px] mb-2">
             {'>'} attack terminal
           </div>
-          <div className="terminal-text">
+          <div className="terminal-text overflow-hidden">
             {isRunning ? (
-              <span className="cursor-blink">
+              <span className="cursor-blink block truncate">
                 {'>'} trying: {state.currentAttempt}
               </span>
             ) : (
-              <span style={{ color: isCracked ? '#FF4466' : '#00FF88' }} className="inline-flex items-center gap-1">
-                {'>'} {isCracked ? <XIcon size={11} /> : <CheckIcon size={11} />}
-                {isCracked ? 'MATCH FOUND' : 'NO MATCH'}: {state.currentAttempt}
+              <span style={{ color: isCracked ? '#FF4466' : '#00FF88' }} className="flex items-center gap-1 min-w-0">
+                <span className="shrink-0">{'>'}</span>
+                <span className="shrink-0">{isCracked ? <XIcon size={11} /> : <CheckIcon size={11} />}</span>
+                <span className="truncate">{isCracked ? 'MATCH FOUND' : 'NO MATCH'}: {state.currentAttempt}</span>
               </span>
             )}
           </div>
